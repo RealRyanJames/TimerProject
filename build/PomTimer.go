@@ -2,12 +2,22 @@ package main
 
 import (
 	datesoptions "PointerTimer/DatesOptions"
+	parsing "PointerTimer/Parsing"
 	uistyles "PointerTimer/UIStyles"
 	userinfostate "PointerTimer/UserInfoState"
+	"encoding/json"
 	"fmt"
+	"os"
 	"strings"
 	"time"
 )
+
+type JsonDataMesh struct {
+	Title       string
+	VERSION     string
+	ToLowerCase string
+	isUpperCase bool
+}
 
 type MainTaskMesh struct {
 	IdInt     int
@@ -61,12 +71,41 @@ func main() {
 	uistyles.AppendLinesUI()
 	fmt.Printf("%s", "\n")
 
-	versionUser := uistyles.VersionApplication{
-		Name:    "Program User",
-		IsOwner: true,
+	content, err := os.ReadFile("../Configs/ConfigParams.json")
+
+	if err != nil {
+		fmt.Println(err)
 	}
 
-	fmt.Print(versionUser.GetId())
+	var jsonLoadsData JsonDataMesh
+	err = json.Unmarshal(content, &jsonLoadsData)
+
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	parsedData := parsing.ParseingMeshType{
+		IsDataShowing: func() bool {
+			return true
+		},
+
+		GetVersionData: func() string {
+			return jsonLoadsData.VERSION
+		},
+
+		GetParsedData: func() string {
+
+			return strings.ToUpper(jsonLoadsData.Title)
+		},
+	}
+
+	if parsedData.GetParsedDataJson() {
+
+		fmt.Println("Welcome to:", parsedData.GetParsedDataData())
+
+		fmt.Println("Current Version:", parsedData.GetVersionData())
+	}
+
 	fmt.Printf("%s", "\n")
 
 	fmt.Println("RUNNING APPLICATION")
@@ -85,7 +124,61 @@ func main() {
 		Str: sQuestion,
 	}
 
+	userPrompt.GetUser()
+
 	fmt.Scanln(&questionByUser.Str)
+
+	if questionByUser.GetReadSync() == "20M" {
+
+		sys_func := SystemMessageMesh{
+			Command: strings.ToLower("PAUSE"),
+		}
+
+		time_current := 0
+		for time_current > -1 {
+
+			if time_current == 20000 {
+
+				value := fmt.Sprintf("%s", "done")
+				time.Sleep(1 * time.Second)
+
+				meshesUpper := MeshesUser{
+					isUnderMesh:   true,
+					outputMessage: value,
+				}
+				fmt.Println(strings.ToUpper(meshesUpper.ReadMesh()))
+				sys_func.SystemFuncMeshc()
+				break
+			}
+
+		}
+	}
+
+	if questionByUser.GetReadSync() == "30M" {
+
+		sys_func := SystemMessageMesh{
+			Command: strings.ToLower("PAUSE"),
+		}
+
+		time_current := 0
+		for time_current > -1 {
+
+			if time_current == 30000 {
+
+				value := fmt.Sprintf("%s", "done")
+				time.Sleep(1 * time.Second)
+
+				meshesUpper := MeshesUser{
+					isUnderMesh:   true,
+					outputMessage: value,
+				}
+				fmt.Println(strings.ToUpper(meshesUpper.ReadMesh()))
+				sys_func.SystemFuncMeshc()
+				break
+			}
+
+		}
+	}
 
 	if questionByUser.GetReadSync() == "5M" {
 
@@ -114,11 +207,11 @@ func main() {
 	}
 
 	if questionByUser.GetReadSync() == "/O" {
-		fmt.Println("1 Hour: H1")
-		fmt.Println("2 Hour: H2")
-		fmt.Println("5M: 5M")
-		fmt.Println("20: 20M")
-		fmt.Println("30: 30M")
+		fmt.Println("1  Hour: H1")
+		fmt.Println("2  Hours: H2")
+		fmt.Println("5  Minutes: 5M")
+		fmt.Println("20 Minutes: 20M")
+		fmt.Println("30 Minutes: 30M")
 
 	} else if questionByUser.GetReadSync() == "H1" {
 
@@ -129,7 +222,7 @@ func main() {
 		time_current := 0
 		for time_current > -1 {
 
-			if time_current == 60*1 {
+			if time_current == 60000 {
 
 				value := fmt.Sprintf("%s", "done")
 				time.Sleep(1 * time.Second)
@@ -170,8 +263,6 @@ func main() {
 		}
 
 	}
-
-	userPrompt.GetUser()
 
 	sys_func := SystemMessageMesh{
 		Command: strings.ToLower("PAUSE"),
