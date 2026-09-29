@@ -3,6 +3,7 @@ package main
 import (
 	datesoptions "PointerTimer/DatesOptions"
 	uistyles "PointerTimer/UIStyles"
+	userinfostate "PointerTimer/UserInfoState"
 	"fmt"
 	"strings"
 	"time"
@@ -74,6 +75,103 @@ func main() {
 
 	dateNow := datesoptions.DateOptions{}
 	fmt.Printf("%d/%d/%d\n", dateNow.Get().Date.Month(), dateNow.Get().Date.Day(), dateNow.Get().Date.Year())
+
+	userPrompt := userinfostate.UserQuestion{
+		IsUIShowing: true,
+	}
+
+	sQuestion := ""
+	questionByUser := userinfostate.ReadUserQuestion{
+		Str: sQuestion,
+	}
+
+	fmt.Scanln(&questionByUser.Str)
+
+	if questionByUser.GetReadSync() == "5M" {
+
+		sys_func := SystemMessageMesh{
+			Command: strings.ToLower("PAUSE"),
+		}
+
+		time_current := 0
+		for time_current > -1 {
+
+			if time_current == 5000 {
+
+				value := fmt.Sprintf("%s", "done")
+				time.Sleep(1 * time.Second)
+
+				meshesUpper := MeshesUser{
+					isUnderMesh:   true,
+					outputMessage: value,
+				}
+				fmt.Println(strings.ToUpper(meshesUpper.ReadMesh()))
+				sys_func.SystemFuncMeshc()
+				break
+			}
+
+		}
+	}
+
+	if questionByUser.GetReadSync() == "/O" {
+		fmt.Println("1 Hour: H1")
+		fmt.Println("2 Hour: H2")
+		fmt.Println("5M: 5M")
+		fmt.Println("20: 20M")
+		fmt.Println("30: 30M")
+
+	} else if questionByUser.GetReadSync() == "H1" {
+
+		sys_func := SystemMessageMesh{
+			Command: strings.ToLower("PAUSE"),
+		}
+
+		time_current := 0
+		for time_current > -1 {
+
+			if time_current == 60*1 {
+
+				value := fmt.Sprintf("%s", "done")
+				time.Sleep(1 * time.Second)
+
+				meshesUpper := MeshesUser{
+					isUnderMesh:   true,
+					outputMessage: value,
+				}
+				fmt.Println(strings.ToUpper(meshesUpper.ReadMesh()))
+				sys_func.SystemFuncMeshc()
+				break
+			}
+
+		}
+	} else if questionByUser.GetReadSync() == "H2" {
+
+		sys_func := SystemMessageMesh{
+			Command: strings.ToLower("PAUSE"),
+		}
+
+		time_current := 0
+		for time_current > -1 {
+
+			if time_current == 60*2 {
+
+				value := fmt.Sprintf("%s", "done")
+				time.Sleep(1 * time.Second)
+
+				meshesUpper := MeshesUser{
+					isUnderMesh:   true,
+					outputMessage: value,
+				}
+				fmt.Println(strings.ToUpper(meshesUpper.ReadMesh()))
+				sys_func.SystemFuncMeshc()
+				break
+			}
+
+		}
+
+	}
+
+	userPrompt.GetUser()
 
 	sys_func := SystemMessageMesh{
 		Command: strings.ToLower("PAUSE"),
