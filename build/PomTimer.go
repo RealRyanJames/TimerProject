@@ -1,6 +1,7 @@
 package main
 
 import (
+	datesoptions "PointerTimer/DatesOptions"
 	uistyles "PointerTimer/UIStyles"
 	"fmt"
 	"strings"
@@ -51,6 +52,9 @@ type SystemMessageMesh struct {
 	SystemFuncMeshc func()
 }
 
+type dateNow struct {
+}
+
 func main() {
 
 	uistyles.AppendLinesUI()
@@ -67,6 +71,9 @@ func main() {
 	fmt.Println("RUNNING APPLICATION")
 	uistyles.AppendLinesUI()
 	fmt.Printf("%s", "\n")
+
+	dateNow := datesoptions.DateOptions{}
+	fmt.Printf("%d/%d/%d\n", dateNow.Get().Date.Month(), dateNow.Get().Date.Day(), dateNow.Get().Date.Year())
 
 	sys_func := SystemMessageMesh{
 		Command: strings.ToLower("PAUSE"),
