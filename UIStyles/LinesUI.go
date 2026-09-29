@@ -1,6 +1,9 @@
 package uistyles
 
-import "fmt"
+import (
+	"fmt"
+	"strings"
+)
 
 type LineUI struct {
 	linesUIStyle string
@@ -19,6 +22,19 @@ func MultiplyPosLines(x float64, y float64) float64 {
 func (PosCalc Calculations) GetPositions() float64 {
 
 	return MultiplyPosLines(PosCalc.GetPosX(), 2.0)
+}
+
+type VersionApplication struct {
+	Name    string
+	IsOwner bool
+}
+
+func (versionId VersionApplication) GetId() string {
+	if versionId.IsOwner {
+		return "Welcome To: " + strings.ToUpper(versionId.Name)
+	}
+
+	return "Welcome To: " + strings.ToUpper(versionId.Name)
 }
 
 func AppendLinesUI() {

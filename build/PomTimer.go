@@ -55,6 +55,15 @@ func main() {
 
 	uistyles.AppendLinesUI()
 	fmt.Printf("%s", "\n")
+
+	versionUser := uistyles.VersionApplication{
+		Name:    "Program User",
+		IsOwner: true,
+	}
+
+	fmt.Print(versionUser.GetId())
+	fmt.Printf("%s", "\n")
+
 	fmt.Println("RUNNING APPLICATION")
 	uistyles.AppendLinesUI()
 	fmt.Printf("%s", "\n")
